@@ -1,23 +1,29 @@
 syntax = "proto3";
 package user;
 
+message UserRequest { string userid = 1; }
+
+message UserObj {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  repeated string customers = 5; // This will be Vec<String>
+  string created_by = 6;
+  string created_at = 7; // maybe datetime type?
+}
+
+// Old staff
+
 service Greeter {
-    rpc SayHello (HelloRequest) returns (HelloReply);
-    rpc SayHi (HiRequest) returns (HiReply);
+  rpc SayHello(HelloRequest) returns (HelloReply);
+  rpc SayHi(HiRequest) returns (HiReply);
 }
 
-message HiRequest {
-    string to = 1;
-}
+message HiRequest { string to = 1; }
 
-message HelloRequest {
-   string name = 1;
-}
+message HelloRequest { string name = 1; }
 
-message HelloReply {
-    string message = 1;
-}
+message HelloReply { string message = 1; }
 
-message HiReply {
-    uint32 counter = 1;
-}
+message HiReply { uint32 counter = 1; }
