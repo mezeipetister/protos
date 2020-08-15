@@ -1,7 +1,30 @@
 syntax = "proto3";
 package user;
 
-message UserRequest { string userid = 1; }
+service User {
+  /*
+   * CreateNewUser
+   * NewUserRequest -> NewUserResponse
+   */
+  rpc CreateNewUser(NewUserRequest) returns (NewUserResponse);
+  /*
+   * Get all users
+   * AllUserRequest -> AllUserResponse
+   */
+  rpc GetAllUser(AllUserRequest) returns (AllUserResponse);
+  /*
+   * Get User By Id
+   * UserByIdRequest -> UserByIdResponse
+   */
+  rpc GetUserById(UserByIdRequest) returns (UserByIdRespone);
+  /*
+   * Update User By ID
+   * UpdateUserRequest -> UpdateUserReply
+   */
+  rpc UpdateUserById(UpdateUserRequest) returns (UpdateUserReply);
+}
+
+message AllUserRequest {}
 
 message UserObj {
   string id = 1;
@@ -13,17 +36,22 @@ message UserObj {
   string created_at = 7; // maybe datetime type?
 }
 
-// Old staff
-
-service Greeter {
-  rpc SayHello(HelloRequest) returns (HelloReply);
-  rpc SayHi(HiRequest) returns (HiReply);
+message NewUserRequest {
+  string username = 1;
+  string email = 2;
+  string name = 3;
+  string phone = 4;
+  string created_by = 5;
 }
 
-message HiRequest { string to = 1; }
+message NewUserResponse { UserObj user = 1; }
 
-message HelloRequest { string name = 1; }
+message AllUserResponse { repeated UserObj users = 1; }
 
-message HelloReply { string message = 1; }
+message UserByIdRequest { string userid = 1; }
 
-message HiReply { uint32 counter = 1; }
+message UserByIdRespone { UserObj user = 1; }
+
+message UpdateUserRequest { UserObj user = 1; }
+
+message UpdateUserReply { UserObj user = 1; }
