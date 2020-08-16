@@ -11,7 +11,7 @@ service User {
    * Get all users
    * AllUserRequest -> GerAllResponse
    */
-  rpc GetAll(google.protobuf.Empty) returns (GerAllResponse);
+  rpc GetAll(google.protobuf.Empty) returns (GetAllResponse);
   /*
    * Get User By Id
    * GetByIdRequest -> UserByIdResponse
@@ -60,7 +60,7 @@ message CreateNewRequest {
 
 message CreateNewResponse { UserObj user = 1; }
 
-message GerAllResponse { repeated UserObj users = 1; }
+message GetAllResponse { repeated UserObj users = 1; }
 
 message GetByIdRequest { string userid = 1; }
 
