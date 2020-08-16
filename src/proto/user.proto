@@ -1,28 +1,42 @@
 syntax = "proto3";
 package user;
-
+import "google/protobuf/empty.proto";
 service User {
   /*
    * CreateNewUser
-   * NewUserRequest -> NewUserResponse
+   * CreateNewRequest -> CreateNewResponse
    */
-  rpc CreateNewUser(NewUserRequest) returns (NewUserResponse);
+  rpc CreateNew(CreateNewRequest) returns (CreateNewResponse);
   /*
    * Get all users
-   * AllUserRequest -> AllUserResponse
+   * AllUserRequest -> GerAllResponse
    */
-  rpc GetAllUser(AllUserRequest) returns (AllUserResponse);
+  rpc GetAll(google.protobuf.Empty) returns (GerAllResponse);
   /*
    * Get User By Id
-   * UserByIdRequest -> UserByIdResponse
+   * GetByIdRequest -> UserByIdResponse
    */
-  rpc GetUserById(UserByIdRequest) returns (UserByIdRespone);
+  rpc GetById(GetByIdRequest) returns (GetByIdResponse);
   /*
    * Update User By ID
-   * UpdateUserRequest -> UpdateUserReply
+   * UpdateByIdRequest -> UpdateUserReply
    */
-  rpc UpdateUserById(UpdateUserRequest) returns (UpdateUserReply);
+  rpc UpdateById(UpdateByIdRequest) returns (UpdateByIdResponse);
+  // rpc CheckUserExist(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc IsUser(IsUserRequest) returns (IsUserResponse);
+  // ResetPassword -> Email::send(!)
+  rpc ResetPassword(ReserPasswordRequest) returns (ReserPasswordResponse);
 }
+
+message ReserPasswordRequest {
+  string userid = 1;
+  string new_password = 2;
+}
+
+message ReserPasswordResponse {}
+
+message IsUserRequest { string userid = 1; }
+message IsUserResponse { bool user_exist = 1; }
 
 message AllUserRequest {}
 
@@ -36,7 +50,7 @@ message UserObj {
   string created_at = 7; // maybe datetime type?
 }
 
-message NewUserRequest {
+message CreateNewRequest {
   string username = 1;
   string email = 2;
   string name = 3;
@@ -44,14 +58,14 @@ message NewUserRequest {
   string created_by = 5;
 }
 
-message NewUserResponse { UserObj user = 1; }
+message CreateNewResponse { UserObj user = 1; }
 
-message AllUserResponse { repeated UserObj users = 1; }
+message GerAllResponse { repeated UserObj users = 1; }
 
-message UserByIdRequest { string userid = 1; }
+message GetByIdRequest { string userid = 1; }
 
-message UserByIdRespone { UserObj user = 1; }
+message GetByIdResponse { UserObj user = 1; }
 
-message UpdateUserRequest { UserObj user = 1; }
+message UpdateByIdRequest { UserObj user = 1; }
 
-message UpdateUserReply { UserObj user = 1; }
+message UpdateByIdResponse { UserObj user = 1; }
