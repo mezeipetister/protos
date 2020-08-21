@@ -1,0 +1,51 @@
+syntax = "proto3";
+package product;
+import "google/protobuf/empty.proto";
+service Product {
+  /*
+   * CreateNewProduct
+   * CreateNewRequest -> CreateNewResponse
+   */
+  rpc CreateNew(CreateNewRequest) returns (CreateNewResponse);
+  /*
+   * Get all products
+   * AllUserRequest -> GerAllResponse
+   */
+  rpc GetAll(google.protobuf.Empty) returns (GetAllResponse);
+  /*
+   * Get Product By Id
+   * GetByIdRequest -> UserByIdResponse
+   */
+  rpc GetById(GetByIdRequest) returns (GetByIdResponse);
+  /*
+   * Update Product By ID
+   * UpdateByIdRequest -> UpdateUserReply
+   */
+  rpc UpdateById(UpdateByIdRequest) returns (UpdateByIdResponse);
+  // rpc CheckUserExist(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc isSku(IsSkuRequest) returns (IsSkuResponse);
+}
+
+message IsSkuRequest { string sku = 1; }
+message IsSkuResponse { bool sku_exist = 1; }
+
+message ProductObj {
+  string sku = 1;
+  string name = 2;
+  string created_by = 6;
+  string created_at = 7; // maybe datetime type?
+}
+
+message CreateNewRequest {}
+
+message CreateNewResponse { ProductObj user = 1; }
+
+message GetAllResponse { repeated ProductObj users = 1; }
+
+message GetByIdRequest { string userid = 1; }
+
+message GetByIdResponse { ProductObj user = 1; }
+
+message UpdateByIdRequest { ProductObj user = 1; }
+
+message UpdateByIdResponse { ProductObj user = 1; }

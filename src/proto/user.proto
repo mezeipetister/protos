@@ -26,7 +26,16 @@ service User {
   rpc IsUser(IsUserRequest) returns (IsUserResponse);
   // ResetPassword -> Email::send(!)
   rpc ResetPassword(ReserPasswordRequest) returns (ReserPasswordResponse);
+  // Validate login request
+  rpc ValidateLogin(LoginRequest) returns (LoginResponse);
 }
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse { bool is_valid = 1; }
 
 message ReserPasswordRequest {
   string userid = 1;
